@@ -1,0 +1,26 @@
+import React, { PropTypes } from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
+import ActionHome from 'material-ui/svg-icons';
+
+
+const SortButtons = ({ generateNumberRange, heapSort, insertionSort, mergeSort, quickSort }) => (
+  <div>
+    <div>
+      <RaisedButton label="Generate" onClick={() => generateNumberRange()} />
+      <RaisedButton label="HeapSort" onClick={() => heapSort()} />
+      <RaisedButton label="InsertionSort" onClick={() => insertionSort()} />
+      <RaisedButton label="MergeSort" onClick={() => mergeSort()} />
+      <RaisedButton label="QuickSort" onClick={() => quickSort()} />
+    </div>
+  </div>
+);
+
+SortButtons.propTypes = {
+  heapSort: PropTypes.func,
+  insertionSort: PropTypes.func,
+  mergeSort: PropTypes.func,
+  quickSort: PropTypes.func
+};
+
+
+export {SortButtons as default};
