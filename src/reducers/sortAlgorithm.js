@@ -28,11 +28,6 @@ export default function sortAlgorithm(state = initialState, action) {
         isSorted: action.isSorted
       });
 
-    case MERGE_SORT:
-      return Object.assign({}, state, {
-        sortedNumbers
-      });
-
     case HEAP_SORT:
       return Object.assign({}, state, {
         sortedNumbers
@@ -41,6 +36,43 @@ export default function sortAlgorithm(state = initialState, action) {
     case INSERTION_SORT:
       return Object.assign({}, state, {
         sortedNumbers
+      });
+
+    case MERGE_SORT:
+      const {jumbledNumbers} = state;
+
+      const mergeSort = function(array=jumbledNumbers) {
+        if (array.length === 1)
+          return array;
+
+        let mid = array.length/2,
+            sliceLeft = array.slice(0, mid),
+            sliceRight = array.slice(mid);
+
+        sliceLeft = mergeSort(sliceLeft);
+        sliceRight = mergeSort(sliceRight);
+        return sort({sliceLeft, sliceRight});
+      };
+
+
+      const sort = function({sliceLeft, sliceRight}) {
+        let sortedArray = [];
+
+        while (sliceLeft.length || sliceRight.length) {
+          let lhs = sliceLeft.length  ? sliceLeft[0]  : null,
+              rhs = sliceRight.length ? sliceRight[0] : null;
+
+          if (lhs !== null && lhs < rhs || rhs === null)
+            sortedArray.push(sliceLeft.shift());
+          else if (rhs !== null && rhs <= lhs || lhs === null)
+            sortedArray.push(sliceRight.shift());
+        };
+
+        return sortedArray;
+      };
+
+      return Object.assign({}, state, {
+        sortedNumbers: mergeSort()
       });
 
     case QUICK_SORT:

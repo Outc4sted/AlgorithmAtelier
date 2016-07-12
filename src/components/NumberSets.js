@@ -21,7 +21,7 @@ const NumberSets = ({sortAlgorithm: { jumbledNumbers, sortedNumbers, isSorted }}
     <Col xs={12}>
       <Paper>
         <h2>Sorted Set</h2>
-        <p>Sorted?: {isSorted.toString()}</p>
+        <p>Sorted?: <strong>{isSorted.toString()}</strong></p>
         <div style={styles.textOflow}>{sortedNumbers.toString()}</div>
       </Paper>
     </Col>
