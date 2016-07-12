@@ -2,9 +2,12 @@ const MAX = 100;
 
 export const GENERATE_NUMBER_RANGE = 'GENERATE_NUMBER_RANGE';
 export function generateNumberRange(max = MAX) {
-  return {
-    type: GENERATE_NUMBER_RANGE,
-    max
+  return dispatch => {
+    dispatch({
+      type: GENERATE_NUMBER_RANGE,
+      max
+    });
+    dispatch(checkSorting());
   };
 }
 

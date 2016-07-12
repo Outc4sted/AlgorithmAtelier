@@ -7,6 +7,7 @@ const initialState = {
 };
 
 export default function sortAlgorithm(state = initialState, action) {
+  const {jumbledNumbers} = state;
   let sortedNumbers = [];
 
   switch (action.type) {
@@ -20,7 +21,8 @@ export default function sortAlgorithm(state = initialState, action) {
       });
 
       return Object.assign({}, state, {
-        jumbledNumbers: numberSet
+        jumbledNumbers: numberSet,
+        sortedNumbers: []
       });
 
     case LIST_SORTED:
@@ -39,8 +41,6 @@ export default function sortAlgorithm(state = initialState, action) {
       });
 
     case MERGE_SORT:
-      const {jumbledNumbers} = state;
-
       const mergeSort = function(array=jumbledNumbers) {
         if (array.length === 1)
           return array;
@@ -60,11 +60,11 @@ export default function sortAlgorithm(state = initialState, action) {
 
         while (sliceLeft.length || sliceRight.length) {
           let lhs = sliceLeft.length  ? sliceLeft[0]  : null,
-              rhs = sliceRight.length ? sliceRight[0] : null;
+              rhs = sliceRight.length ? sliceRight[0] : null,
+              takingFromTheLeft = lhs !== null && lhs < rhs || rhs === null;
 
-          if (lhs !== null && lhs < rhs || rhs === null)
-            sortedArray.push(sliceLeft.shift());
-          else if (rhs !== null && rhs <= lhs || lhs === null)
+          takingFromTheLeft ?
+            sortedArray.push(sliceLeft.shift()) :
             sortedArray.push(sliceRight.shift());
         };
 
