@@ -3,10 +3,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import ActionHome from 'material-ui/svg-icons';
 
 
-const SortButtons = ({ generateNumberRange, heapSort, insertionSort, mergeSort, quickSort }) => (
+const SortButtons = ({ generateNumberRange, bubbleSort, heapSort, insertionSort, mergeSort, quickSort }) => (
   <div>
     <div>
       <RaisedButton label="Generate" onClick={() => generateNumberRange()} />
+      <RaisedButton label="BubbleSort" onClick={() => bubbleSort()} />
       <RaisedButton label="HeapSort" onClick={() => heapSort()} />
       <RaisedButton label="InsertionSort" onClick={() => insertionSort()} />
       <RaisedButton label="MergeSort" onClick={() => mergeSort()} />

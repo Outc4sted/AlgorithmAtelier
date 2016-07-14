@@ -1,4 +1,4 @@
-import { GENERATE_NUMBER_RANGE, LIST_SORTED, HEAP_SORT, INSERTION_SORT, MERGE_SORT, QUICK_SORT } from '../actions/sortAlgorithms';
+import { GENERATE_NUMBER_RANGE, LIST_SORTED, BUBBLE_SORT, HEAP_SORT, INSERTION_SORT, MERGE_SORT, QUICK_SORT } from '../actions/sortAlgorithms';
 
 const initialState = {
   jumbledNumbers: [],
@@ -28,6 +28,30 @@ export default function sortAlgorithm(state = initialState, action) {
     case LIST_SORTED:
       return Object.assign({}, state, {
         isSorted: action.isSorted
+      });
+
+    case BUBBLE_SORT:
+      const bubbleSort = function(array=[]) {
+        let sortedArray = array.slice();
+        let swaps = 0;
+
+        do {
+          swaps = 0;
+          sortedArray.forEach((currentValue, currentIndex) => {
+            if (sortedArray.length > 1 && currentIndex < sortedArray.length-1 && currentValue > sortedArray[currentIndex+1]) {
+              sortedArray.splice(currentIndex, 1);
+              sortedArray.splice(currentIndex+1, 0, currentValue);
+              swaps++;
+            }
+          });
+        }
+        while (swaps > 0);
+
+        return sortedArray;
+      };
+
+      return Object.assign({}, state, {
+        sortedNumbers: bubbleSort(jumbledNumbers)
       });
 
     case HEAP_SORT:

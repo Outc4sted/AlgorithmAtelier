@@ -33,6 +33,14 @@ export function listSorted(isSorted) {
   };
 }
 
+export const BUBBLE_SORT = 'BUBBLE_SORT';
+export function bubbleSort() {
+  return dispatch => {
+    dispatch({type: BUBBLE_SORT});
+    dispatch(checkSorting());
+  };
+}
+
 export const HEAP_SORT = 'HEAP_SORT';
 export function heapSort() {
   return dispatch => {
