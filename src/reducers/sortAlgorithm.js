@@ -36,13 +36,24 @@ export default function sortAlgorithm(state = initialState, action) {
       });
 
     case INSERTION_SORT:
+      const insertionSort = function(array=[]) {
+        return array.reduce((sortedArray, currentValue, currentIndex) => {
+          let position = currentIndex;
+          while (sortedArray.length && currentValue < sortedArray[position-1])
+            position--;
+
+          sortedArray.splice(position, 0, currentValue);
+          return sortedArray;
+        }, []);
+      };
+
       return Object.assign({}, state, {
-        sortedNumbers
+        sortedNumbers: insertionSort(jumbledNumbers)
       });
 
     case MERGE_SORT:
-      const mergeSort = function(array=jumbledNumbers) {
-        if (array.length === 1)
+      const mergeSort = function(array=[]) {
+        if (array.length < 2)
           return array;
 
         let mid = array.length/2,
@@ -72,7 +83,7 @@ export default function sortAlgorithm(state = initialState, action) {
       };
 
       return Object.assign({}, state, {
-        sortedNumbers: mergeSort()
+        sortedNumbers: mergeSort(jumbledNumbers)
       });
 
     case QUICK_SORT:
