@@ -72,3 +72,11 @@ export function quickSort() {
     dispatch(checkSorting());
   };
 }
+
+export const SELECTION_SORT = 'SELECTION_SORT';
+export function selectionSort() {
+  return dispatch => {
+    dispatch({type: SELECTION_SORT});
+    dispatch(checkSorting());
+  };
+}

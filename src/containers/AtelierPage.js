@@ -23,12 +23,12 @@ class AlgorithmAtelier extends Component {
   }
 
   render() {
-    const { sortAlgorithm, generateNumberRange, bubbleSort, heapSort, insertionSort, mergeSort, quickSort } = this.props;
+    const { sortAlgorithm, generateNumberRange, bubbleSort, heapSort, insertionSort, mergeSort, quickSort, selectionSort } = this.props;
 
     return (
       <Row>
         <Col xs>
-          <SortButtons generateNumberRange={generateNumberRange} bubbleSort={bubbleSort} heapSort={heapSort} insertionSort={insertionSort} mergeSort={mergeSort} quickSort={quickSort} />
+          <SortButtons generateNumberRange={generateNumberRange} bubbleSort={bubbleSort} heapSort={heapSort} insertionSort={insertionSort} mergeSort={mergeSort} quickSort={quickSort} selectionSort={selectionSort} />
           <NumberSets sortAlgorithm={sortAlgorithm} />
         </Col>
       </Row>

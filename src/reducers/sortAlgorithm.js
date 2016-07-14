@@ -1,4 +1,4 @@
-import { GENERATE_NUMBER_RANGE, LIST_SORTED, BUBBLE_SORT, HEAP_SORT, INSERTION_SORT, MERGE_SORT, QUICK_SORT } from '../actions/sortAlgorithms';
+import { GENERATE_NUMBER_RANGE, LIST_SORTED, BUBBLE_SORT, HEAP_SORT, INSERTION_SORT, MERGE_SORT, QUICK_SORT, SELECTION_SORT } from '../actions/sortAlgorithms';
 
 const initialState = {
   jumbledNumbers: [],
@@ -113,6 +113,15 @@ export default function sortAlgorithm(state = initialState, action) {
     case QUICK_SORT:
       return Object.assign({}, state, {
         sortedNumbers
+      });
+
+    case SELECTION_SORT:
+      const selectionSort = function(array=[]) {
+        return array;
+      };
+
+      return Object.assign({}, state, {
+        sortedNumbers: selectionSort(jumbledNumbers)
       });
 
     default:
