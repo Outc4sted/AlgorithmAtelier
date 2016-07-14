@@ -117,19 +117,19 @@ export default function sortAlgorithm(state = initialState, action) {
 
     case SELECTION_SORT:
       const selectionSort = function(array=[]) {
-        let sortedArray = [],
-            arrayCopy = array.slice();
+        let sortedArray = array.slice();
 
-        while (sortedArray.length !== array.length) {
-          let lowestIndex = arrayCopy.reduce((lowestIndex, currentValue, currentIndex) => {
-            if (currentValue <= arrayCopy[lowestIndex])
-              return currentIndex;
-            return lowestIndex;
-          }, 0);
+        sortedArray.forEach((currentValue, currentIndex) => {
+            let lowestIndex = sortedArray.reduce((lowestIndex, currentValue, index) => {
+              if (index >= currentIndex && currentValue <= sortedArray[lowestIndex])
+                return index;
+              return lowestIndex;
+            }, currentIndex);
 
-          sortedArray.push(arrayCopy[lowestIndex]);
-          arrayCopy.splice(lowestIndex, 1);
-        }
+            sortedArray.splice(currentIndex, 0, sortedArray[lowestIndex]);
+            sortedArray.splice(lowestIndex+1, 1);
+
+        });
 
         return sortedArray;
       };
