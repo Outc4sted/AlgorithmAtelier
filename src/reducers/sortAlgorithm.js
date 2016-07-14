@@ -89,7 +89,6 @@ export default function sortAlgorithm(state = initialState, action) {
         return sort({sliceLeft, sliceRight});
       };
 
-
       const sort = function({sliceLeft, sliceRight}) {
         let sortedArray = [];
 
@@ -128,7 +127,6 @@ export default function sortAlgorithm(state = initialState, action) {
 
             sortedArray.splice(currentIndex, 0, sortedArray[lowestIndex]);
             sortedArray.splice(lowestIndex+1, 1);
-
         });
 
         return sortedArray;
