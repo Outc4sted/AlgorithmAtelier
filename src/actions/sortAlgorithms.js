@@ -14,14 +14,39 @@ export function generateNumberRange(max = MAX) {
 export const CHECK_SORTING = 'CHECK_SORTING';
 export function checkSorting() {
   return (dispatch, getState) => {
-    const {sortAlgorithm: { jumbledNumbers, sortedNumbers }} = getState();
-    const isSorted = sortedNumbers.length === jumbledNumbers.length && sortedNumbers.every((n, index) => {
+    const {sortAlgorithm: { sortedNumbers }} = getState();
+    const isSorted = sortedNumbers.length === MAX+1 && sortedNumbers.every((n, index) => {
       if (index > sortedNumbers.length-2)
         return true;
       else return n <= sortedNumbers[index+1];
     });
 
     dispatch(listSorted(isSorted));
+  };
+}
+
+export const VALIDATE_MAX_HEAP = 'VALIDATE_MAX_HEAP';
+export function validateMaxHeap(maxHeap) {
+  return (dispatch, getState) => {
+    const maxHeapValidated = maxHeap.length === MAX+2 && maxHeap.every((parent, index) => {
+      let lhLeaf = index*2,
+          rhLeaf = index*2+1;
+
+      if (lhLeaf >= maxHeap.length)
+        return true;
+
+      if (parent > maxHeap[lhLeaf]) {
+        if (rhLeaf < maxHeap.length)
+          return parent > maxHeap[rhLeaf]
+        return true;
+      }
+      return false;
+    });
+
+    dispatch({
+      type: VALIDATE_MAX_HEAP,
+      maxHeapValidated
+    });
   };
 }
 
@@ -43,8 +68,11 @@ export function bubbleSort() {
 
 export const HEAP_SORT = 'HEAP_SORT';
 export function heapSort() {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({type: HEAP_SORT});
+    const {sortAlgorithm: { sortedNumbers }} = getState();
+
+    dispatch(validateMaxHeap(sortedNumbers));
     dispatch(checkSorting());
   };
 }

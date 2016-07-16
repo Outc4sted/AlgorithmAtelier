@@ -1,9 +1,11 @@
-import { GENERATE_NUMBER_RANGE, LIST_SORTED, BUBBLE_SORT, HEAP_SORT, INSERTION_SORT, MERGE_SORT, QUICK_SORT, SELECTION_SORT } from '../actions/sortAlgorithms';
+import { GENERATE_NUMBER_RANGE, LIST_SORTED, VALIDATE_MAX_HEAP, BUBBLE_SORT, HEAP_SORT, INSERTION_SORT, MERGE_SORT, QUICK_SORT, SELECTION_SORT } from '../actions/sortAlgorithms';
 
 const initialState = {
   jumbledNumbers: [],
   sortedNumbers:  [],
-  isSorted: false
+  isSorted: false,
+  isMaxHeap: false,
+  sortType: null
 };
 
 export default function sortAlgorithm(state = initialState, action) {
@@ -22,12 +24,18 @@ export default function sortAlgorithm(state = initialState, action) {
 
       return Object.assign({}, state, {
         jumbledNumbers: numberSet,
-        sortedNumbers: []
+        sortedNumbers: [],
+        sortType: null
       });
 
     case LIST_SORTED:
       return Object.assign({}, state, {
         isSorted: action.isSorted
+      });
+
+    case VALIDATE_MAX_HEAP:
+      return Object.assign({}, state, {
+        isMaxHeap: action.maxHeapValidated
       });
 
     case BUBBLE_SORT:
@@ -51,12 +59,29 @@ export default function sortAlgorithm(state = initialState, action) {
       };
 
       return Object.assign({}, state, {
-        sortedNumbers: bubbleSort(jumbledNumbers)
+        sortedNumbers: bubbleSort(jumbledNumbers),
+        sortType: 'Bubble Sort'
       });
 
     case HEAP_SORT:
+      const heapSort = function(array=[]) {
+        return [,10,9,7,8,4,6,3,5,2,1,0];
+        //         10
+        //     9        7
+        //  8     4    6 3
+        // 5 2   1 0
+
+        // heapify(array, array.length);
+        // return array;
+      };
+
+      const heapify = function(heap, position) {
+        return heap;
+      };
+
       return Object.assign({}, state, {
-        sortedNumbers
+        sortedNumbers: heapSort(jumbledNumbers),
+        sortType: 'Heap Sort'
       });
 
     case INSERTION_SORT:
@@ -72,7 +97,8 @@ export default function sortAlgorithm(state = initialState, action) {
       };
 
       return Object.assign({}, state, {
-        sortedNumbers: insertionSort(jumbledNumbers)
+        sortedNumbers: insertionSort(jumbledNumbers),
+        sortType: 'Insertion Sort'
       });
 
     case MERGE_SORT:
@@ -106,12 +132,18 @@ export default function sortAlgorithm(state = initialState, action) {
       };
 
       return Object.assign({}, state, {
-        sortedNumbers: mergeSort(jumbledNumbers)
+        sortedNumbers: mergeSort(jumbledNumbers),
+        sortType: 'Merge Sort'
       });
 
     case QUICK_SORT:
+      const quickSort = function(array=[]) {
+        return array;
+      };
+
       return Object.assign({}, state, {
-        sortedNumbers
+        sortedNumbers: quickSort(jumbledNumbers),
+        sortType: 'Quick Sort'
       });
 
     case SELECTION_SORT:
@@ -133,7 +165,8 @@ export default function sortAlgorithm(state = initialState, action) {
       };
 
       return Object.assign({}, state, {
-        sortedNumbers: selectionSort(jumbledNumbers)
+        sortedNumbers: selectionSort(jumbledNumbers),
+        sortType: 'Selection Sort'
       });
 
     default:
