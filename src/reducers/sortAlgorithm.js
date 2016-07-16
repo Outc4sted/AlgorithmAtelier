@@ -1,11 +1,21 @@
 import { GENERATE_NUMBER_RANGE, LIST_SORTED, VALIDATE_MAX_HEAP, BUBBLE_SORT, HEAP_SORT, INSERTION_SORT, MERGE_SORT, QUICK_SORT, SELECTION_SORT } from '../actions/sortAlgorithms';
 
+const sortTypes = {
+  bubbleSort:    'Bubble Sort',
+  heapSort:      'Heap Sort',
+  insertionSort: 'Insertion Sort',
+  mergeSort:     'Merge Sort',
+  quickSort:     'Quick Sort',
+  selectionSort: 'Selection Sort'
+};
+
 const initialState = {
   jumbledNumbers: [],
   sortedNumbers:  [],
   isSorted: false,
   isMaxHeap: false,
-  sortType: null
+  sortType: null,
+  sortTypes
 };
 
 export default function sortAlgorithm(state = initialState, action) {
@@ -60,7 +70,7 @@ export default function sortAlgorithm(state = initialState, action) {
 
       return Object.assign({}, state, {
         sortedNumbers: bubbleSort(jumbledNumbers),
-        sortType: 'Bubble Sort'
+        sortType: sortTypes.bubbleSort
       });
 
     case HEAP_SORT:
@@ -81,7 +91,7 @@ export default function sortAlgorithm(state = initialState, action) {
 
       return Object.assign({}, state, {
         sortedNumbers: heapSort(jumbledNumbers),
-        sortType: 'Heap Sort'
+        sortType: sortTypes.heapSort
       });
 
     case INSERTION_SORT:
@@ -98,7 +108,7 @@ export default function sortAlgorithm(state = initialState, action) {
 
       return Object.assign({}, state, {
         sortedNumbers: insertionSort(jumbledNumbers),
-        sortType: 'Insertion Sort'
+        sortType: sortTypes.insertionSort
       });
 
     case MERGE_SORT:
@@ -133,7 +143,7 @@ export default function sortAlgorithm(state = initialState, action) {
 
       return Object.assign({}, state, {
         sortedNumbers: mergeSort(jumbledNumbers),
-        sortType: 'Merge Sort'
+        sortType: sortTypes.mergeSort
       });
 
     case QUICK_SORT:
@@ -143,7 +153,7 @@ export default function sortAlgorithm(state = initialState, action) {
 
       return Object.assign({}, state, {
         sortedNumbers: quickSort(jumbledNumbers),
-        sortType: 'Quick Sort'
+        sortType: sortTypes.quickSort
       });
 
     case SELECTION_SORT:
@@ -166,7 +176,7 @@ export default function sortAlgorithm(state = initialState, action) {
 
       return Object.assign({}, state, {
         sortedNumbers: selectionSort(jumbledNumbers),
-        sortType: 'Selection Sort'
+        sortType: sortTypes.selectionSort
       });
 
     default:

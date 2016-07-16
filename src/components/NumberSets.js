@@ -9,7 +9,7 @@ const styles = {
   }
 };
 
-const NumberSets = ({sortAlgorithm: { jumbledNumbers, sortedNumbers, isSorted, isMaxHeap, sortType }}) => (
+const NumberSets = ({sortAlgorithm: { jumbledNumbers, sortedNumbers, isSorted, isMaxHeap, sortType, sortTypes }}) => (
   <Row around="xs" middle="xs">
     <Col xs={12}>
       <Paper>
@@ -22,7 +22,7 @@ const NumberSets = ({sortAlgorithm: { jumbledNumbers, sortedNumbers, isSorted, i
       <Paper>
         <h2>Sorted Set</h2>
         <h5>{sortType}</h5>
-        {sortType == 'Heap Sort' &&
+        {sortType === sortTypes.heapSort &&
           <p>Max Heap?: <strong>{isMaxHeap.toString()}</strong></p>
         }
         <p>Sorted?: <strong>{isSorted.toString()}</strong></p>
