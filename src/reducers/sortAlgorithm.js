@@ -14,11 +14,11 @@ export default function sortAlgorithm(state = initialState, action) {
 
   switch (action.type) {
     case GENERATE_NUMBER_RANGE:
-      let numberSet = Array.apply(null, {length: action.max+1}).map(Number.call, Number).reduce((memo, currentValue, currentIndex, array) => {
-        let otherIndex = Math.floor(Math.random() * (currentIndex + 1));
-        let temp = array[currentIndex];
-        array[currentIndex] = array[otherIndex];
-        array[otherIndex] = temp;
+      const numberSet = Array.apply(null, {length: action.max+1}).map(Number.call, Number).reduce((memo, currentValue, currentIndex, array) => {
+        const randomIndex = Math.floor(Math.random() * array.length);
+
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex]  = currentValue;
         return array;
       });
 
