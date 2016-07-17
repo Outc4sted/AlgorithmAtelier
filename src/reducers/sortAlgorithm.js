@@ -1,4 +1,4 @@
-import { GENERATE_NUMBER_RANGE, LIST_SORTED, BUBBLE_SORT, HEAP_SORT, INSERTION_SORT, MERGE_SORT, QUICK_SORT, SELECTION_SORT } from '../actions/sortAlgorithms';
+import { GENERATE_NUMBER_RANGE, LIST_SORTED, MAX_HEAP_BUILT, BUBBLE_SORT, HEAP_SORT, INSERTION_SORT, MERGE_SORT, QUICK_SORT, SELECTION_SORT } from '../actions/sortAlgorithms';
 
 const sortTypes = {
   bubbleSort:    'Bubble Sort',
@@ -40,8 +40,12 @@ export default function sortAlgorithm(state = initialState, action) {
 
     case LIST_SORTED:
       return Object.assign({}, state, {
-        isMaxHeap: action.isMaxHeap,
         isSorted: action.isSorted
+      });
+
+    case MAX_HEAP_BUILT:
+      return Object.assign({}, state, {
+        isMaxHeap: action.isMaxHeap
       });
 
     case BUBBLE_SORT:

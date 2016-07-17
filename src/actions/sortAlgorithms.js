@@ -22,7 +22,7 @@ export function checkSorting() {
       return n <= sortedNumbers[index+1];
     });
 
-    dispatch(listSorted({isSorted}));
+    dispatch(listSorted(isSorted));
   };
 }
 
@@ -46,16 +46,23 @@ export function validateMaxHeap() {
       return false;
     });
 
-    dispatch(listSorted({isMaxHeap}));
+    dispatch(maxHeapBuilt(isMaxHeap));
   };
 }
 
 export const LIST_SORTED = 'LIST_SORTED';
-export function listSorted({isMaxHeap=false, isSorted=false}) {
+export function listSorted(isSorted) {
   return {
     type: LIST_SORTED,
-    isMaxHeap,
     isSorted
+  };
+}
+
+export const MAX_HEAP_BUILT = 'MAX_HEAP_BUILT';
+export function maxHeapBuilt(isMaxHeap) {
+  return {
+    type: MAX_HEAP_BUILT,
+    isMaxHeap
   };
 }
 
