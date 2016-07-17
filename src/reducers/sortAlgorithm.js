@@ -75,18 +75,33 @@ export default function sortAlgorithm(state = initialState, action) {
 
     case HEAP_SORT:
       const heapSort = function(array=[]) {
-        return [,10,9,7,8,4,6,3,5,2,1,0];
-        //         10
-        //     9        7
-        //  8     4    6 3
-        // 5 2   1 0
+        const maxHeap = [ , ...array];
 
-        // heapify(array, array.length);
-        // return array;
+        for (let currentIndex = maxHeap.length/2; currentIndex >= 0; currentIndex--)
+          heapify(maxHeap, currentIndex);
+
+        return maxHeap;
       };
 
-      const heapify = function(heap, position) {
-        return heap;
+      const heapify = function(maxHeap, currentIndex) {
+        const lhIndex = currentIndex * 2,
+              rhIndex = currentIndex * 2 + 1,
+              lhInBounds = lhIndex < maxHeap.length,
+              rhInBounds = rhIndex < maxHeap.length;
+
+        let greatestIndex = currentIndex;
+        if (lhInBounds && maxHeap[currentIndex] < maxHeap[lhIndex])
+          greatestIndex = lhIndex;
+        if (rhInBounds && maxHeap[greatestIndex] < maxHeap[rhIndex])
+          greatestIndex = rhIndex;
+
+        if (greatestIndex !== currentIndex) {
+          const greatestValue = maxHeap[greatestIndex];
+          maxHeap[greatestIndex] = maxHeap[currentIndex];
+          maxHeap[currentIndex] = greatestValue;
+
+          heapify(maxHeap, greatestIndex);
+        }
       };
 
       return Object.assign({}, state, {
