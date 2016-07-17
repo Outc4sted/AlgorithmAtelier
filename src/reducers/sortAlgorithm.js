@@ -115,7 +115,8 @@ export default function sortAlgorithm(state = initialState, action) {
           heapify(maxHeap, maxLength);
         }
 
-        return maxHeap.slice(1);
+        maxHeap.splice(0, 1);
+        return maxHeap;
       };
 
       return Object.assign({}, state, {
