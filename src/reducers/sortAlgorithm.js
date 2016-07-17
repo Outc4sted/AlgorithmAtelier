@@ -83,7 +83,6 @@ export default function sortAlgorithm(state = initialState, action) {
         return hsort(maxHeap);
       };
 
-
       const heapify = function(maxHeap, maxLength, currentIndex=1) {
         const lhIndex = currentIndex * 2,
               rhIndex = currentIndex * 2 + 1,
