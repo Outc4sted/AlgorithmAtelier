@@ -50,7 +50,7 @@ export default function sortAlgorithm(state = initialState, action) {
 
     case BUBBLE_SORT:
       const bubbleSort = function(array=[]) {
-        let sortedArray = array.slice();
+        const sortedArray = array.slice();
         let swaps = 0;
 
         do {
@@ -155,12 +155,12 @@ export default function sortAlgorithm(state = initialState, action) {
       };
 
       const msort = function({sliceLeft, sliceRight}) {
-        let sortedArray = [];
+        const sortedArray = [];
 
         while (sliceLeft.length || sliceRight.length) {
-          let lhs = sliceLeft.length  ? sliceLeft[0]  : null,
-              rhs = sliceRight.length ? sliceRight[0] : null,
-              takingFromTheLeft = lhs !== null && lhs < rhs || rhs === null;
+          const lhs = sliceLeft.length  ? sliceLeft[0]  : null,
+                rhs = sliceRight.length ? sliceRight[0] : null,
+                takingFromTheLeft = lhs !== null && lhs < rhs || rhs === null;
 
           takingFromTheLeft ?
             sortedArray.push(sliceLeft.shift()) :
@@ -187,10 +187,10 @@ export default function sortAlgorithm(state = initialState, action) {
 
     case SELECTION_SORT:
       const selectionSort = function(array=[]) {
-        let sortedArray = array.slice();
+        const sortedArray = array.slice();
 
         sortedArray.forEach((currentValue, currentIndex) => {
-            let lowestIndex = sortedArray.reduce((lowestIndex, currentValue, index) => {
+            const lowestIndex = sortedArray.reduce((lowestIndex, currentValue, index) => {
               if (index >= currentIndex && currentValue <= sortedArray[lowestIndex])
                 return index;
               return lowestIndex;
