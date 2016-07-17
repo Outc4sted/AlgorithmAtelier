@@ -177,7 +177,35 @@ export default function sortAlgorithm(state = initialState, action) {
 
     case QUICK_SORT:
       const quickSort = function(array=[]) {
-        return array;
+        const sortedArray = array.slice(),
+              thirds = Math.floor(sortedArray.length/3),
+              pivot = sortedArray.length > 8 ?
+                medianOfThree([ medianOfThree(sortedArray.slice(0, thirds)), medianOfThree(sortedArray.slice(thirds, thirds*2)), medianOfThree(sortedArray.slice(thirds*2)) ]) :
+                medianOfThree(sortedArray);
+
+        qsort(sortedArray, pivot, 0, sortedArray.length);
+
+        return sortedArray;
+      };
+
+      const medianOfThree = function(set) {
+        if (set.length > 2) {
+          const pivots = [
+            set[0],
+            set[Math.floor(set.length/2)],
+            set[set.length-1]
+          ].sort((a, b) => a > b );
+
+          return pivots[1];
+        }
+        else if (set.length === 1)
+          return set[0];
+
+        const randomIndex = Math.floor(Math.random() * set.length);
+        return set[randomIndex];
+      };
+
+      const qsort = function(set, pivot, startIndex, endIndex) {
       };
 
       return Object.assign({}, state, {
