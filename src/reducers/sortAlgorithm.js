@@ -77,17 +77,18 @@ export default function sortAlgorithm(state = initialState, action) {
       const heapSort = function(array=[]) {
         const maxHeap = [ , ...array];
 
-        for (let currentIndex = maxHeap.length/2; currentIndex >= 0; currentIndex--)
-          heapify(maxHeap, currentIndex);
+        for (let currentIndex = Math.floor(maxHeap.length/2); currentIndex >= 0; currentIndex--)
+          heapify(maxHeap, maxHeap.length, currentIndex);
 
-        return maxHeap;
+        return hsort(maxHeap);
       };
 
-      const heapify = function(maxHeap, currentIndex) {
+
+      const heapify = function(maxHeap, maxLength, currentIndex=1) {
         const lhIndex = currentIndex * 2,
               rhIndex = currentIndex * 2 + 1,
-              lhInBounds = lhIndex < maxHeap.length,
-              rhInBounds = rhIndex < maxHeap.length;
+              lhInBounds = lhIndex < maxLength,
+              rhInBounds = rhIndex < maxLength;
 
         let greatestIndex = currentIndex;
         if (lhInBounds && maxHeap[currentIndex] < maxHeap[lhIndex])
@@ -100,8 +101,21 @@ export default function sortAlgorithm(state = initialState, action) {
           maxHeap[greatestIndex] = maxHeap[currentIndex];
           maxHeap[currentIndex] = greatestValue;
 
-          heapify(maxHeap, greatestIndex);
+          heapify(maxHeap, maxLength, greatestIndex);
         }
+      };
+
+      const hsort = function(maxHeap) {
+        for (let currentIndex = maxHeap.length-1; currentIndex > 0; currentIndex--) {
+          const swap = maxHeap[currentIndex],
+                maxLength = currentIndex;
+
+          maxHeap[currentIndex] = maxHeap[1];
+          maxHeap[1] = swap;
+          heapify(maxHeap, maxLength);
+        }
+
+        return maxHeap.slice(1);
       };
 
       return Object.assign({}, state, {
@@ -137,10 +151,10 @@ export default function sortAlgorithm(state = initialState, action) {
 
         sliceLeft = mergeSort(sliceLeft);
         sliceRight = mergeSort(sliceRight);
-        return sort({sliceLeft, sliceRight});
+        return msort({sliceLeft, sliceRight});
       };
 
-      const sort = function({sliceLeft, sliceRight}) {
+      const msort = function({sliceLeft, sliceRight}) {
         let sortedArray = [];
 
         while (sliceLeft.length || sliceRight.length) {
