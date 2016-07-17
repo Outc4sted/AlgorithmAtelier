@@ -15,45 +15,46 @@ export const CHECK_SORTING = 'CHECK_SORTING';
 export function checkSorting() {
   return (dispatch, getState) => {
     const {sortAlgorithm: { sortedNumbers }} = getState();
+
     const isSorted = sortedNumbers.length === MAX+1 && sortedNumbers.every((n, index) => {
       if (index > sortedNumbers.length-2)
         return true;
-      else return n <= sortedNumbers[index+1];
+      return n <= sortedNumbers[index+1];
     });
 
-    dispatch(listSorted(isSorted));
+    dispatch(listSorted({isSorted}));
   };
 }
 
 export const VALIDATE_MAX_HEAP = 'VALIDATE_MAX_HEAP';
-export function validateMaxHeap(maxHeap) {
+export function validateMaxHeap() {
   return (dispatch, getState) => {
-    const maxHeapValidated = maxHeap.length === MAX+2 && maxHeap.every((parent, index) => {
+    const {sortAlgorithm: { sortedNumbers }} = getState();
+
+    const isMaxHeap = sortedNumbers.length === MAX+2 && sortedNumbers.every((parent, index) => {
       let lhLeaf = index*2,
           rhLeaf = index*2+1;
 
-      if (lhLeaf >= maxHeap.length)
+      if (lhLeaf >= sortedNumbers.length)
         return true;
 
-      if (parent > maxHeap[lhLeaf]) {
-        if (rhLeaf < maxHeap.length)
-          return parent > maxHeap[rhLeaf]
+      if (parent > sortedNumbers[lhLeaf]) {
+        if (rhLeaf < sortedNumbers.length)
+          return parent > sortedNumbers[rhLeaf];
         return true;
       }
       return false;
     });
 
-    dispatch({
-      type: VALIDATE_MAX_HEAP,
-      maxHeapValidated
-    });
+    dispatch(listSorted({isMaxHeap}));
   };
 }
 
 export const LIST_SORTED = 'LIST_SORTED';
-export function listSorted(isSorted) {
+export function listSorted({isMaxHeap=false, isSorted=false}) {
   return {
     type: LIST_SORTED,
+    isMaxHeap,
     isSorted
   };
 }
@@ -68,11 +69,9 @@ export function bubbleSort() {
 
 export const HEAP_SORT = 'HEAP_SORT';
 export function heapSort() {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch({type: HEAP_SORT});
-    const {sortAlgorithm: { sortedNumbers }} = getState();
-
-    dispatch(validateMaxHeap(sortedNumbers));
+    dispatch(validateMaxHeap());
     dispatch(checkSorting());
   };
 }
