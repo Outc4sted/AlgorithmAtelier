@@ -145,16 +145,14 @@ export default function sortAlgorithm(state = initialState, action) {
         if (array.length < 2)
           return array;
 
-        let mid = array.length/2,
-            sliceLeft = array.slice(0, mid),
-            sliceRight = array.slice(mid);
+        const mid = array.length/2,
+              sliceLeft = mergeSort(array.slice(0, mid)),
+              sliceRight = mergeSort(array.slice(mid));
 
-        sliceLeft = mergeSort(sliceLeft);
-        sliceRight = mergeSort(sliceRight);
-        return msort({sliceLeft, sliceRight});
+        return msort({ sliceLeft, sliceRight });
       };
 
-      const msort = function({sliceLeft, sliceRight}) {
+      const msort = function({ sliceLeft, sliceRight }) {
         const sortedArray = [];
 
         while (sliceLeft.length || sliceRight.length) {
