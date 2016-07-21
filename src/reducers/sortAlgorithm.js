@@ -178,32 +178,59 @@ export default function sortAlgorithm(state = initialState, action) {
         const sortedArray = array.slice(),
               thirds = Math.floor(sortedArray.length/3),
               pivot = sortedArray.length > 8 ?
-                medianOfThree([ medianOfThree(sortedArray.slice(0, thirds)), medianOfThree(sortedArray.slice(thirds, thirds*2)), medianOfThree(sortedArray.slice(thirds*2)) ]) :
-                medianOfThree(sortedArray);
+                medianOfThree([ medianOfThree(sortedArray, 0, thirds), medianOfThree(sortedArray, thirds, thirds*2), medianOfThree(sortedArray, thirds*2, sortedArray.length) ], 0, 3 ) :
+                medianOfThree(sortedArray, 0, sortedArray.length);
 
         qsort(sortedArray, pivot, 0, sortedArray.length);
-
         return sortedArray;
       };
 
-      const medianOfThree = function(set) {
-        if (set.length > 2) {
-          const pivots = [
-            set[0],
-            set[Math.floor(set.length/2)],
-            set[set.length-1]
-          ].sort((a, b) => a > b );
+      const medianOfThree = function(set, startIndex, endIndex) {
+        const setLength = endIndex-startIndex;
+        if (setLength < 3)
+          return set[startIndex];
 
-          return pivots[1];
-        }
-        else if (set.length === 1)
-          return set[0];
+        const pivots = [
+          set[startIndex],
+          set[startIndex + Math.floor(setLength/2)],
+          set[endIndex-1]
+        ].sort((a, b) => a > b );
 
-        const randomIndex = Math.floor(Math.random() * set.length);
-        return set[randomIndex];
+        return pivots[1];
       };
 
       const qsort = function(set, pivot, startIndex, endIndex) {
+        const setLength = endIndex-startIndex;
+        if (setLength < 2)
+          return;
+
+        for (let currentIndex = startIndex; currentIndex < endIndex; currentIndex++) {
+          if (set[currentIndex] === pivot)
+            continue;
+
+          const currentValue = set.splice(currentIndex, 1).pop();
+          if (currentValue < pivot)
+            set.splice(startIndex, 0, currentValue);
+          else {
+            set.splice(endIndex-1, 0, currentValue);
+            currentIndex--;
+            endIndex--;
+          }
+        }
+
+        const lhList = {
+          start: startIndex,
+          end:   endIndex-1,
+          pivot: medianOfThree(set, startIndex, endIndex-1)
+        };
+        const rhList = {
+          start: endIndex,
+          end:   startIndex+setLength,
+          pivot: medianOfThree(set, endIndex, startIndex+setLength)
+        };
+
+        qsort(set, lhList.pivot, lhList.start, lhList.end);
+        qsort(set, rhList.pivot, rhList.start, rhList.end);
       };
 
       return Object.assign({}, state, {
